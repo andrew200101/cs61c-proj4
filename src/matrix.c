@@ -474,8 +474,6 @@ int neg_matrix(matrix *result, matrix *mat)
 int abs_matrix(matrix *result, matrix *mat)
 {
     /* TODO: YOUR CODE HERE */
-    int num_threads = omp_get_num_threads();
-    int thread_id = omp_get_thread_num();
 
     double *result_ptr = result->data;
     double *mat_ptr = mat->data;
@@ -486,39 +484,41 @@ int abs_matrix(matrix *result, matrix *mat)
     __m256d all_zero = _mm256_setzero_pd();
 
     int total_size = (mat->rows * mat->cols);
+    int num_threads = omp_get_num_threads();
+    int thread_id = omp_get_thread_num();
 
 #pragma omp parallel for
+
     for (int i = thread_id; i < (total_size / 16) * 16; i += (16 * num_threads))
     {
 
         __m256d *start_0_mat = (__m256d *)(mat_ptr + i);
         mat_simd = _mm256_loadu_pd(start_0_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0.0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i, abs_result);
 
         __m256d *start_1_mat = (__m256d *)(mat_ptr + i + 4);
         mat_simd = _mm256_loadu_pd(start_1_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0.0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i + 4, abs_result);
 
         __m256d *start_2_mat = (__m256d *)(mat_ptr + i + 8);
         mat_simd = _mm256_loadu_pd(start_2_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0.0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i + 8, abs_result);
 
         __m256d *start_3_mat = (__m256d *)(mat_ptr + i + 12);
         mat_simd = _mm256_loadu_pd(start_3_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0.0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i + 12, abs_result);
     }
 
-#pragma omp parallel for
-    for (int i = (total_size / 16) * 16 + thread_id;
-         i < total_size; i += num_threads)
+    for (int i = (total_size / 16) * 16;
+         i < total_size; i++)
     {
         *(result_ptr + i) = abs(*(mat_ptr + i));
     }

@@ -1,5 +1,5 @@
-from utils import *
-from unittest import TestCase
+
+m unittest import TestCase
 
 """
 - For each operation, you should write tests to test  on matrices of different sizes.
@@ -364,5 +364,5 @@ class TestSlice(TestCase):
         b = a[0]
         del a
         c = b[0]
-        del b
+        del quit
 

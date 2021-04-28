@@ -530,7 +530,7 @@ static PyObject *Matrix61c_abs(Matrix61c *self)
         return NULL;
     }
 
-    if (self->mat->rows == 0 || self->mat->cols == 0)
+    if (self->mat->rows <= 0 || self->mat->cols <= 0)
     {
         PyErr_SetString(PyExc_ValueError, "Dimensions must be valid");
         return NULL;
