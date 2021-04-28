@@ -125,44 +125,32 @@ class TestAbs(TestCase):
     def test_small_abs(self):
         # TODO: YOUR CODE HERE
 
-        dp_mat, nc_mat = rand_dp_nc_matrix(2, 2, seed=0)
+        dp_mat, nc_mat = rand_dp_nc_matrix(3, 3, seed=0)
 
         nc_mat = abs(nc_mat)
         dp_mat = abs(dp_mat)
         self.assertEqual(nc_mat, dp_mat)
-
-        dp_mat, nc_mat = rand_dp_nc_matrix(2, 2, seed=0)
-        is_correct, speed_up = compute([dp_mat], [nc_mat], "abs")
-        self.assertTrue(is_correct)
-        print_speedup(speed_up)
 
     def test_medium_abs(self):
         # TODO: YOUR CODE HERE
         dp_mat, nc_mat = rand_dp_nc_matrix(
-            500, 500, low=-500, high=500, seed=0)
+            501, 501, low=-500, high=500, seed=0)
         is_correct, speed_up = compute([dp_mat], [nc_mat], "abs")
         self.assertTrue(is_correct)
         print_speedup(speed_up)
-
-        dp_mat, nc_mat = rand_dp_nc_matrix(50, 50, low=-50, high=50, seed=0)
-        nc_mat = abs(nc_mat)
-        dp_mat = abs(dp_mat)
-        self.assertEqual(nc_mat, dp_mat)
 
     def test_large_abs(self):
         # TODO: YOUR CODE HERE
 
         dp_mat, nc_mat = rand_dp_nc_matrix(
-            1500, 1500, low=-500, high=500, seed=0)
-        is_correct, speed_up = compute([dp_mat], [nc_mat], "abs")
-        self.assertTrue(is_correct)
-        print_speedup(speed_up)
+            1501, 1501, low=-500, high=500, seed=0)
+        dp_mat_2, nc_mat_2 = rand_dp_nc_matrix(
+            1501, 1501, low=-500, high=500, seed=0)
 
-        dp_mat, nc_mat = rand_dp_nc_matrix(
-            500, 500, low=-500, high=500, seed=0)
-        nc_mat = abs(nc_mat)
-        dp_mat = abs(dp_mat)
-        self.assertEqual(nc_mat, dp_mat)
+        dp_mat_2 = abs(dp_mat)
+        nc_mat_2 = abs(nc_mat)
+
+        self.assertEqual(dp_mat_2, nc_mat_2)
 
 
 class TestNeg(TestCase):

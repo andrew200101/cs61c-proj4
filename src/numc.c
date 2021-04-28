@@ -530,6 +530,12 @@ static PyObject *Matrix61c_abs(Matrix61c *self)
         return NULL;
     }
 
+    if (self->mat->rows == 0 || self->mat->cols == 0)
+    {
+        PyErr_SetString(PyExc_ValueError, "Dimensions must be valid");
+        return NULL;
+    }
+
     Matrix61c *result = (Matrix61c *)Matrix61c_new(&Matrix61cType, NULL, NULL);
     result->mat = new_mat;
     result->shape = PyTuple_Pack(2, PyLong_FromLong(new_mat->rows), PyLong_FromLong(new_mat->cols));
