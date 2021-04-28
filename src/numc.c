@@ -536,6 +536,12 @@ static PyObject *Matrix61c_abs(Matrix61c *self)
         return NULL;
     }
 
+    if (!PyObject_TypeCheck(self, &Matrix61cType))
+    {
+        PyErr_SetString(PyExc_TypeError, "Arguments must of type numc.Matrix!");
+        return NULL;
+    }
+
     Matrix61c *result = (Matrix61c *)Matrix61c_new(&Matrix61cType, NULL, NULL);
     result->mat = new_mat;
     result->shape = PyTuple_Pack(2, PyLong_FromLong(new_mat->rows), PyLong_FromLong(new_mat->cols));

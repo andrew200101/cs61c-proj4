@@ -494,25 +494,25 @@ int abs_matrix(matrix *result, matrix *mat)
 
         __m256d *start_0_mat = (__m256d *)(mat_ptr + i);
         mat_simd = _mm256_loadu_pd(start_0_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd((double)0.0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i, abs_result);
 
         __m256d *start_1_mat = (__m256d *)(mat_ptr + i + 4);
         mat_simd = _mm256_loadu_pd(start_1_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd((double)0.0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i + 4, abs_result);
 
         __m256d *start_2_mat = (__m256d *)(mat_ptr + i + 8);
         mat_simd = _mm256_loadu_pd(start_2_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd((double)0.0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i + 8, abs_result);
 
         __m256d *start_3_mat = (__m256d *)(mat_ptr + i + 12);
         mat_simd = _mm256_loadu_pd(start_3_mat);
-        neg_result = _mm256_sub_pd(_mm256_set1_pd(0), mat_simd);
+        neg_result = _mm256_sub_pd(_mm256_set1_pd((double)0.0), mat_simd);
         abs_result = _mm256_max_pd(neg_result, mat_simd);
         _mm256_storeu_pd(result_ptr + i + 12, abs_result);
     }
